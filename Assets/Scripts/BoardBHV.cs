@@ -12,7 +12,11 @@ public class BoardBHV : MonoBehaviour {
     public float summonDelay = 2.0f;
     [Header("References")]
     public GameObject[] unitPrefabs;
+    public PlayerSO player;
     private ElementalBHV[][] boardUnits = null;
+
+ 
+    public int Score {get; private set;}
 
     private void Awake()
     {
@@ -66,7 +70,6 @@ public class BoardBHV : MonoBehaviour {
 
     private void Spawn()
     {
-        
         bool tileChosen = false;
         int x = -1;
         int y = -1;
@@ -88,6 +91,7 @@ public class BoardBHV : MonoBehaviour {
             boardUnits[x][y] = obj.GetComponent<ElementalBHV>();
             obj.transform.localPosition = new Vector2(x * step, y * step);
         }
+        UpdateScore(); //FIXME: put it in a better place
     }
 
     private void MoveUnits (int axis, int dir)
@@ -162,5 +166,34 @@ public class BoardBHV : MonoBehaviour {
             Spawn();
             yield return new WaitForSeconds(summonDelay);
         }
+    }
+
+    private void UpdateScore()
+    {
+        Score = 0;
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (boardUnits[i][j] != null)
+                {
+                    Score += (int)Mathf.Pow(2, boardUnits[i][j].Level-1);
+                }
+            }
+        }
+        if (Score > player.highscore)
+        {
+            player.highscore = Score;
+        }
+    }
+
+    public void MoveHorizontal(int dir)
+    {
+        MoveUnits(0, dir);
+    }
+
+    public void MoveVertical(int dir)
+    {
+        MoveUnits(1, dir);
     }
 }

@@ -47,6 +47,7 @@ public class ElementalBHV : MonoBehaviour {
     {
         Level++;
         textMesh.text = Level.ToString();
+        transform.localScale *= 1.09f;
     }
 
     public bool Matches(ElementalBHV other)

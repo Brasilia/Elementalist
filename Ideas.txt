@@ -1,0 +1,13 @@
+Modes:
+- Arcade
+- Vs
+
+Options:
+- Elemental superiority (true/false) (elements have strengths/weaknesses)
+- Spawn Trigger (move/timer)
+
+
+VS MODE:
+- Elemental superiority = true
+- Spawn Trigger = timer
+- Every move delays timer
